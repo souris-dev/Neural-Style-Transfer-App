@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../stores/Stores.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class StyleOptionsPreview extends StatefulWidget {
   @override
@@ -9,7 +11,16 @@ class StyleOptionsPreview extends StatefulWidget {
 class _StyleOptionsPreviewState extends State<StyleOptionsPreview> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Observer(
+      builder: (_) => AnimatedContainer(
+        curve: Curves.easeIn,
+        duration: Duration(milliseconds: 150),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(21.w), border: Border.all(color: Color(0xFF342DEF))),
+        child: Column(
+          children: <Widget>[],
+        ),
+      ),
+    );
   }
 }
 
@@ -21,7 +32,52 @@ class StyleOptionsBar extends StatefulWidget {
 class _StyleOptionsBarState extends State<StyleOptionsBar> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(
+      height: 45.h,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        border: Border.fromBorderSide(
+          BorderSide(
+            color: Color(0xFFF3F3F3),
+          ),
+        ),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(17.w),
+          topRight: Radius.circular(17.w),
+        ),
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+            blurRadius: 6,
+            offset: Offset(0, -2),
+            color: Color(0x66D9CAFE),
+          ),
+        ],
+      ),
+      child: Row(
+        children: <Widget>[
+          Container(
+            child: Image.asset(
+              'assets/images/raster/StyleBarCloseBtn.png',
+              height: 24.h,
+              width: 29.w,
+            ),
+          ),
+          Expanded(
+            child: Container(
+              child: Placeholder(),
+              // ListWheelScrollView within RotatedBox
+            ),
+          ),
+          Container(
+            child: Image.asset(
+              'assets/images/raster/StyleBarAddStyleBtn.png',
+              height: 24.h,
+              width: 29.w,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 
