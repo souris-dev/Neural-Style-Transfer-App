@@ -65,6 +65,7 @@ flutter:
     - assets/images/raster/StyleBarAddStyleBtn.png
     - assets/images/raster/StyleBarCloseBtn.png
     - assets/images/raster/StyleUseBtn.png
+    - assets/images/stylesamples/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

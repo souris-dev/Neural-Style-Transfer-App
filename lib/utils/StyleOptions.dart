@@ -10,7 +10,7 @@ class StyleOption {
   StyleOption.fromMap(Map<String, dynamic> map) {
     assetName = map['assetname'];
     createdBy = map['createdby'];
-    id = map['id'];
+    id = map['styleid'];
   }
 
   Image getImage() {

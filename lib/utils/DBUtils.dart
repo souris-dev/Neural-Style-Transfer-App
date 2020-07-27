@@ -18,7 +18,7 @@ class DBUtils {
 
     _database = await openDatabase(dbPath, version: 1, onCreate: (Database db, int version) async {
       if (!isDBTableCreated) {
-        await db.execute('CREATE TABLE Styles (id INTEGER PRIMARY KEY, assetname TEXT, createdby TEXT)');
+        await db.execute('CREATE TABLE Styles (styleid INTEGER PRIMARY KEY, assetname TEXT, createdby TEXT)');
         SharedPrefUtils.setDBTableCreated(true);
       }
     });
@@ -30,7 +30,7 @@ class DBUtils {
       return;
     }
     await _database.transaction((txn) async {
-      txn.insert('Styles', {'id': style.id, 'assetname': style.assetName, 'createdby': style.createdBy});
+      txn.insert('Styles', {'styleid': style.id, 'assetname': style.assetName, 'createdby': style.createdBy});
     });
   }
 

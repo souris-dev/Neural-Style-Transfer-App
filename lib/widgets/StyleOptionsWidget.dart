@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../stores/Stores.dart';
+import '../utils/DBUtils.dart';
+import '../utils/StyleOptions.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -12,14 +14,45 @@ class _StyleOptionsPreviewState extends State<StyleOptionsPreview> {
   @override
   Widget build(BuildContext context) {
     return Observer(
-      builder: (_) => AnimatedContainer(
-        curve: Curves.easeIn,
-        duration: Duration(milliseconds: 150),
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(21.w), border: Border.all(color: Color(0xFF342DEF))),
-        child: Column(
-          children: <Widget>[],
-        ),
-      ),
+      builder: (_) {
+        var unlockedStyles = DBUtils.getUnlockedStyles();
+        return AnimatedContainer(
+          curve: Curves.easeIn,
+          duration: Duration(milliseconds: 150),
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(21.w), border: Border.all(color: Color(0xFF342DEF))),
+          child: Column(
+            children: <Widget>[
+              Container(),
+              Container(
+                child: FutureBuilder<List<StyleOption>>(
+                  future: unlockedStyles,
+                  builder: (context, AsyncSnapshot<List<StyleOption>> snapshot) {
+                    if (!snapshot.hasData) {
+                      return Image.asset(snapshot.data[Stores.styleOptStr.currentSelectedStyleOptionIndex].assetName);
+                    } else {
+                      return CircularProgressIndicator();
+                    }
+                  },
+                ),
+              ),
+              Container(
+                child: Row(
+                  children: <Widget>[
+                    Container(
+                      child: GestureDetector(
+                        child: Image.asset("assets/images/raster/StyleUseBtn.png"),
+                        onTap: () {
+                          Stores.styleOptionsStore.closeStyleOptions();
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+        );
+      },
     );
   }
 }
