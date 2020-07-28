@@ -22,7 +22,31 @@ class _StyleOptionsPreviewState extends State<StyleOptionsPreview> {
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(21.w), border: Border.all(color: Color(0xFF342DEF))),
           child: Column(
             children: <Widget>[
-              Container(),
+              Container(
+                height: 22.w, // the w is not a typo
+                child: Center(
+                  child: FutureBuilder<List<StyleOption>>(
+                    future: unlockedStyles,
+                    builder: (BuildContext context, AsyncSnapshot<List<StyleOption>> snapshot) {
+                      if (!snapshot.hasData) {
+                        return Wrap(
+                          children: <Widget>[
+                            Text(
+                              'By ' + snapshot.data[Stores.styleOptStr.currentSelectedStyleOptionIndex].createdBy,
+                              style: TextStyle(
+                                color: Color(0xFFEF0773),
+                                fontSize: 12.sp,
+                              ),
+                            ),
+                          ],
+                        );
+                      } else {
+                        return Container();
+                      }
+                    },
+                  ),
+                ),
+              ),
               Container(
                 child: FutureBuilder<List<StyleOption>>(
                   future: unlockedStyles,
@@ -36,9 +60,12 @@ class _StyleOptionsPreviewState extends State<StyleOptionsPreview> {
                 ),
               ),
               Container(
+                height: 22.w, // again, w is not a typo here
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
                     Container(
+                      padding: EdgeInsets.all(5.5.h),
                       child: GestureDetector(
                         child: Image.asset("assets/images/raster/StyleUseBtn.png"),
                         onTap: () {
@@ -114,6 +141,37 @@ class _StyleOptionsBarState extends State<StyleOptionsBar> {
   }
 }
 
+class InvertedTriangleClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    Path clipPath = new Path();
+    clipPath.lineTo(size.width / 2, size.height);
+    clipPath.lineTo(size.width, 0.0);
+    return clipPath;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+}
+
+// TODO: Implement a Shadow around the triangle
+// kind of tough because not all the sides have a shadow
+class SmallInvertedTriangle extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ClipPath(
+      clipper: InvertedTriangleClipper(),
+      child: Container(
+        height: 20.h,
+        width: 27.w,
+        decoration: BoxDecoration(
+          color: Color(0xFF5B30EC),
+        ),
+      ),
+    );
+  }
+}
+
 class StyleOptionsWidget extends StatefulWidget {
   @override
   _StyleOptionsWidgetState createState() => _StyleOptionsWidgetState();
@@ -122,6 +180,12 @@ class StyleOptionsWidget extends StatefulWidget {
 class _StyleOptionsWidgetState extends State<StyleOptionsWidget> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Stack(
+      children: <Widget>[
+        StyleOptionsPreview(),
+        SmallInvertedTriangle(),
+        StyleOptionsBar(),
+      ],
+    );
   }
 }
