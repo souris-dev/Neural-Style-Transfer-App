@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../stores/Stores.dart';
 
 class StyleButton extends StatefulWidget {
+  StyleButton({Key key, this.onPressed}) : super(key: key);
+
+  final Function onPressed;
   @override
   _StyleButtonState createState() => _StyleButtonState();
 }
@@ -11,9 +13,7 @@ class _StyleButtonState extends State<StyleButton> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Stores.styleOptStr.openStyleOptions();
-      },
+      onTap: widget.onPressed,
       child: Container(
         height: 20.h,
         width: 134.w,

@@ -182,9 +182,19 @@ class _StyleOptionsWidgetState extends State<StyleOptionsWidget> {
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
-        StyleOptionsPreview(),
-        SmallInvertedTriangle(),
-        StyleOptionsBar(),
+        // positionings are subject to change
+        Positioned(
+          bottom: (45 + 20).h,
+          child: StyleOptionsPreview(),
+        ),
+        Positioned(
+          bottom: 45.h,
+          child: SmallInvertedTriangle(),
+        ),
+        Positioned(
+          bottom: 0.0,
+          child: StyleOptionsBar(),
+        ),
       ],
     );
   }

@@ -5,7 +5,9 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import '../widgets/DAppBar.dart';
 import '../widgets/StylesButton.dart';
 import '../widgets/ResultDisplayBody.dart';
+import '../widgets/StyleOptionsWidget.dart';
 import '../stores/Stores.dart';
+import 'FrostedGlassBlurOverlayedPage.dart';
 
 class ResultsPage extends StatefulWidget {
   ResultsPage({Key key, this.chosenImage}) : super(key: key);
@@ -40,7 +42,19 @@ class _ResultsPageState extends State<ResultsPage> {
               ),
             ),
           ),
-          StyleButton(),
+          StyleButton(
+            onPressed: () {
+              Navigator.of(context).push(
+                new FrostedGlassBlurOverlayedPage(
+                  animationStartValue: 0.0,
+                  animationEndValue: 6.0,
+                  animationDuration: Duration(milliseconds: 300),
+                  page: StyleOptionsWidget(),
+                ),
+              );
+              Stores.styleOptStr.openStyleOptions();
+            },
+          ),
         ],
       ),
     );
