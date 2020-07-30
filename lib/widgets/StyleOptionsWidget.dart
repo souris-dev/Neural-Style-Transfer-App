@@ -90,6 +90,15 @@ class StyleOptionsBar extends StatefulWidget {
 }
 
 class _StyleOptionsBarState extends State<StyleOptionsBar> {
+  FixedExtentScrollController thumbnailPrevController;
+
+  @override
+  void initState() {
+    super.initState();
+    var lastSelectedStyleIndex = Stores.styleOptionsStore.currentSelectedStyleOptionIndex;
+    thumbnailPrevController = new FixedExtentScrollController(initialItem: lastSelectedStyleIndex);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -124,7 +133,54 @@ class _StyleOptionsBarState extends State<StyleOptionsBar> {
           ),
           Expanded(
             child: Container(
-              child: Placeholder(),
+              child: RotatedBox(
+                quarterTurns: 1,
+                child: FutureBuilder(
+                  future: DBUtils.getUnlockedStyles(),
+                  builder: (context, AsyncSnapshot<List<StyleOption>> snapshot) {
+                    if (snapshot.hasData) {
+                      List<StyleOption> styleOpts = snapshot.data;
+                      List<Widget> styleThumbnails = List<Widget>.from(
+                        styleOpts.map(
+                          (styleOption) {
+                            return RotatedBox(
+                              quarterTurns: -1,
+                              child: Container(
+                                height: 32.h,
+                                width: 38.w,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(3.w),
+                                  image: DecorationImage(
+                                    image: Image.asset(styleOption.assetName).image,
+                                    fit: BoxFit.contain,
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      );
+
+                      return ListWheelScrollView(
+                        itemExtent: 40.w,
+                        children: styleThumbnails,
+                        magnification: 1.1,
+                        overAndUnderCenterOpacity: 0.5,
+                        useMagnifier: true,
+                        physics: FixedExtentScrollPhysics(),
+                        controller: thumbnailPrevController,
+                        diameterRatio: 5.2,
+                        squeeze: 0.8,
+                        onSelectedItemChanged: (index) {
+                          Stores.styleOptionsStore.setCurrentSelectedStyleIdx(index);
+                        },
+                      );
+                    } else {
+                      return Container();
+                    }
+                  },
+                ),
+              ),
               // ListWheelScrollView within RotatedBox
             ),
           ),
