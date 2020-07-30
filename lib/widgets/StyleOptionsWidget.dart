@@ -52,7 +52,7 @@ class _StyleOptionsPreviewState extends State<StyleOptionsPreview> {
                   future: unlockedStyles,
                   builder: (context, AsyncSnapshot<List<StyleOption>> snapshot) {
                     if (!snapshot.hasData) {
-                      return Image.asset(snapshot.data[Stores.styleOptStr.currentSelectedStyleOptionIndex].assetName);
+                      return snapshot.data[Stores.styleOptStr.currentSelectedStyleOptionIndex].getImage();
                     } else {
                       return CircularProgressIndicator();
                     }
@@ -151,7 +151,7 @@ class _StyleOptionsBarState extends State<StyleOptionsBar> {
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(3.w),
                                   image: DecorationImage(
-                                    image: Image.asset(styleOption.assetName).image,
+                                    image: styleOption.getImage().image,
                                     fit: BoxFit.contain,
                                   ),
                                 ),

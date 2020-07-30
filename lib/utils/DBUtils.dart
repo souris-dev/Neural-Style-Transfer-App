@@ -30,7 +30,8 @@ class DBUtils {
       return;
     }
     await _database.transaction((txn) async {
-      txn.insert('Styles', {'styleid': style.id, 'assetname': style.assetName, 'createdby': style.createdBy});
+      // note that the styleid attribute should be incremented by default, being a primary key
+      txn.insert('Styles', {'assetname': style.assetName, 'createdby': style.createdBy});
     });
   }
 
@@ -40,7 +41,8 @@ class DBUtils {
       return null;
     }
 
-    List<Map> results = await _database.rawQuery('SELECT * FROM Styles');
+    // must order the results so that they are always in a specific order
+    List<Map> results = await _database.rawQuery('SELECT * FROM Styles ORDER BY styleid');
     List<StyleOption> stylesUnlocked = [];
 
     for (Map result in results) {
