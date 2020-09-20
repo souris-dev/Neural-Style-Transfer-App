@@ -7,17 +7,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 enum PictureCardType { HEIGHT_CONSTRAIN, WIDTH_CONSTRAIN }
 
 class PictureCard extends StatefulWidget {
-  PictureCard({
-    Key key,
-    this.image,
-    this.cardType,
-    this.actionButtonColor,
-    this.onActionPress,
-    this.onImagePress,
-  }) : super(key: key);
+  PictureCard({Key key, this.image, this.cardType, this.actionButtonColor, this.onActionPress, this.onImagePress, this.imgSize}) : super(key: key);
 
   final PictureCardType cardType;
   final Image image;
+  final Size imgSize;
   final Color actionButtonColor;
   final Function onImagePress;
   final Function onActionPress;
@@ -35,11 +29,13 @@ class _PictureCardState extends State<PictureCard> {
     image = widget.image;
 
     if (widget.cardType == PictureCardType.HEIGHT_CONSTRAIN) {
-      cardH = 489.h;
-      cardW = (image.width / image.height) * cardH;
+      cardH = 300.h;
+      cardW = (widget.imgSize.width / widget.imgSize.height) * cardH;
+      print(cardH);
+      print(cardW);
     } else {
       cardW = 489.w;
-      cardH = (image.height / image.width) * cardW;
+      cardH = (widget.imgSize.height / widget.imgSize.width) * cardW;
     }
   }
 
@@ -94,7 +90,7 @@ class _PictureCardState extends State<PictureCard> {
       ),
       child: Align(
         child: actionButton,
-        alignment: Alignment(0.87, 0.02),
+        alignment: Alignment(0.92, -0.97),
       ),
     );
   }

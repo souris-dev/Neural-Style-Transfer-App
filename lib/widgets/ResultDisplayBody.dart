@@ -34,7 +34,6 @@ class _ResultDisplayBodyState extends State<ResultDisplayBody> {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 11.h, horizontal: 11.w),
       height: 101.5.h,
-      width: MediaQuery.of(context).size.width,
       child: Column(
         children: <Widget>[
           Text(
@@ -44,7 +43,7 @@ class _ResultDisplayBodyState extends State<ResultDisplayBody> {
               fontFamily: 'SegoePrint',
             ),
           ),
-          if (layout == DisplayLayout.PORTRAIT)
+          /*if (layout == DisplayLayout.PORTRAIT)
             Column(
               children: <Widget>[
                 PictureCard(
@@ -89,7 +88,7 @@ class _ResultDisplayBodyState extends State<ResultDisplayBody> {
                   },
                 ),
               ],
-            ),
+            ),*/
         ],
       ),
     );

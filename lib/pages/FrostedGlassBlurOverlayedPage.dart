@@ -36,7 +36,7 @@ class FrostedGlassBlurOverlayedPage extends PopupRoute<Null> {
   String get barrierLabel => "Close";
 
   @override
-  Duration get transitionDuration => this.transitionDuration;
+  Duration get transitionDuration => Duration(milliseconds: 500);
 
   @override
   Widget buildTransitions(BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {

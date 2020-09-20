@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
@@ -5,6 +7,7 @@ import 'package:style_transfer_app/stores/Stores.dart';
 import 'package:style_transfer_app/widgets/LongPinkButton.dart';
 import 'package:style_transfer_app/widgets/StartPageAppBar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'ResultsPage.dart';
 
 class StartPage extends StatelessWidget {
   @override
@@ -62,6 +65,11 @@ class StartPage extends StatelessWidget {
                   child: LongPinkButton(
                     onPress: () async {
                       var image = await ImagePicker().getImage(source: ImageSource.gallery);
+                      if (image != null)
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (ctx) => new ResultsPage(
+                                  chosenImage: Image.file(File(image.path)),
+                                )));
                     },
                     text: 'PICK FROM GALLERY',
                   ),
@@ -76,6 +84,11 @@ class StartPage extends StatelessWidget {
                   child: LongPinkButton(
                     onPress: () async {
                       var image = await ImagePicker().getImage(source: ImageSource.camera);
+                      if (image != null)
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (ctx) => new ResultsPage(
+                                  chosenImage: Image.file(File(image.path)),
+                                )));
                     },
                     text: 'USE CAMERA',
                   ),
